@@ -17,3 +17,6 @@ Thumbs.db
 
 # Raw scraping run archives (transient)
 Jobs/Raw_Exports/
+
+# Browser testing artifacts
+.playwright-mcp/

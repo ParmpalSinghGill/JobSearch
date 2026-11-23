@@ -30,6 +30,7 @@ from build_gui import build_gui
 APPLICATIONS_FILE = os.path.join(BASE_DIR, "Jobs", "applied_jobs.json")
 APPLICATIONS_CSV = os.path.join(BASE_DIR, "Jobs", "Applied_Jobs_Tracker.csv")
 ALL_JOBS_CSV = os.path.join(BASE_DIR, "Jobs", "All_Jobs.csv")
+WORKPLACE_OVERRIDES_FILE = os.path.join(BASE_DIR, "Jobs", "workplace_overrides.json")
 
 SEARCH_LOCK = threading.Lock()
 IS_SEARCHING = False
@@ -251,6 +252,20 @@ class JobSuiteRequestHandler(http.server.SimpleHTTPRequestHandler):
                 self._send_json({})
                 return
 
+        elif path == "/api/jobs/overrides":
+            if os.path.exists(WORKPLACE_OVERRIDES_FILE):
+                try:
+                    with open(WORKPLACE_OVERRIDES_FILE, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    self._send_json(data)
+                    return
+                except Exception as e:
+                    self._send_json({"error": str(e)}, 500)
+                    return
+            else:
+                self._send_json({})
+                return
+
         elif path == "/api/search":
             days = float(params.get("days", [1.0])[0])
             with SEARCH_LOCK:
@@ -332,6 +347,73 @@ class JobSuiteRequestHandler(http.server.SimpleHTTPRequestHandler):
             thread.start()
             self._send_json({"status": "started", "message": f"Started search for last {days} days."})
             return
+
+        elif path == "/api/jobs/update_workplace":
+            try:
+                job_id = str(req_data.get("job_id", "")).strip()
+                workplace_type = str(req_data.get("workplace_type", "")).strip()
+                overrides_dict = req_data.get("overrides")
+
+                current_overrides = {}
+                if os.path.exists(WORKPLACE_OVERRIDES_FILE):
+                    try:
+                        with open(WORKPLACE_OVERRIDES_FILE, "r", encoding="utf-8") as f:
+                            current_overrides = json.load(f)
+                    except Exception:
+                        current_overrides = {}
+
+                if overrides_dict and isinstance(overrides_dict, dict):
+                    for k, v in overrides_dict.items():
+                        current_overrides[str(k).strip()] = str(v).strip()
+                elif job_id and workplace_type:
+                    current_overrides[job_id] = workplace_type
+                else:
+                    self._send_json({"error": "Missing job_id or workplace_type"}, 400)
+                    return
+
+                os.makedirs(os.path.dirname(WORKPLACE_OVERRIDES_FILE), exist_ok=True)
+                with open(WORKPLACE_OVERRIDES_FILE, "w", encoding="utf-8") as f:
+                    json.dump(current_overrides, f, indent=2)
+
+                # Update Workplace Type in All_Jobs.csv if job_id matches
+                if os.path.exists(ALL_JOBS_CSV) and job_id and workplace_type:
+                    try:
+                        df = pd.read_csv(ALL_JOBS_CSV)
+                        updated = False
+                        for idx, row in df.iterrows():
+                            link = str(row.get("Link to Apply", ""))
+                            m = re.search(r"/view/(\d+)", link)
+                            if m and m.group(1) == job_id:
+                                df.at[idx, "Workplace Type"] = workplace_type
+                                updated = True
+                                break
+                        if updated:
+                            df.to_csv(ALL_JOBS_CSV, index=False, encoding="utf-8-sig")
+                    except Exception as ex:
+                        print(f"Warning: could not update All_Jobs.csv: {ex}")
+
+                # Update applied_jobs.json if tracked
+                if os.path.exists(APPLICATIONS_FILE) and job_id and workplace_type:
+                    try:
+                        with open(APPLICATIONS_FILE, "r", encoding="utf-8") as f:
+                            apps = json.load(f)
+                        if job_id in apps:
+                            apps[job_id]["workplace_type"] = workplace_type
+                            with open(APPLICATIONS_FILE, "w", encoding="utf-8") as f:
+                                json.dump(apps, f, indent=2)
+                    except Exception:
+                        pass
+
+                self._send_json({
+                    "status": "ok",
+                    "job_id": job_id,
+                    "workplace_type": workplace_type,
+                    "total_overrides": len(current_overrides)
+                })
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, 500)
+                return
 
         self._send_json({"error": "Endpoint not found"}, 404)
 

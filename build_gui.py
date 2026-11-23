@@ -91,6 +91,16 @@ def build_gui():
             return False
         return True
 
+    # Load workplace overrides if present
+    overrides_file = os.path.join(base_dir, "Jobs", "workplace_overrides.json")
+    workplace_overrides = {}
+    if os.path.exists(overrides_file):
+        try:
+            with open(overrides_file, "r", encoding="utf-8") as f:
+                workplace_overrides = json.load(f)
+        except Exception:
+            workplace_overrides = {}
+
     jobs_data = []
     seen_ids = set()
 
@@ -115,6 +125,9 @@ def build_gui():
             continue
         seen_ids.add(jid)
 
+        if jid in workplace_overrides:
+            wp = workplace_overrides[jid]
+
         score, matched_skills = calculate_match(title, desc)
         is_int = is_international(loc)
         is_prof = "Profile" in query
@@ -137,6 +150,14 @@ def build_gui():
         })
 
     jobs_data.sort(key=lambda x: x["score"], reverse=True)
+
+    total_active_jobs = sum(1 for j in jobs_data if j["workplace_type"] != "Not Available")
+    total_remote = sum(1 for j in jobs_data if j["workplace_type"] == "Remote")
+    total_hybrid = sum(1 for j in jobs_data if j["workplace_type"] == "Hybrid")
+    total_onsite = sum(1 for j in jobs_data if j["workplace_type"] == "On-site")
+    total_not_available = sum(1 for j in jobs_data if j["workplace_type"] == "Not Available")
+    total_profile = sum(1 for j in jobs_data if j.get("is_profile") and j["workplace_type"] != "Not Available")
+    total_international = sum(1 for j in jobs_data if j.get("is_international") and j["workplace_type"] != "Not Available")
 
     json_jobs = json.dumps(jobs_data)
     json_cv = json.dumps(cv_text)
@@ -175,7 +196,7 @@ def build_gui():
           <div>
             <h1 class="text-sm font-bold text-white tracking-tight flex items-center gap-2">
               LinkedIn AI Job Suite
-              <span id="headerTotalJobsCount" class="text-[11px] font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">{len(jobs_data)} Roles</span>
+              <span id="headerTotalJobsCount" class="text-[11px] font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">{total_active_jobs} Roles</span>
             </h1>
           </div>
         </div>
@@ -268,13 +289,14 @@ def build_gui():
         
         <!-- Category Tabs -->
         <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5" id="filterTabs">
-          <button data-filter="all" class="filter-tab active px-2.5 py-1 rounded-md font-medium bg-blue-600 text-white">All (<span id="countAll">{len(jobs_data)}</span>)</button>
+          <button data-filter="all" class="filter-tab active px-2.5 py-1 rounded-md font-medium bg-blue-600 text-white">All (<span id="countAll">{total_active_jobs}</span>)</button>
           <button data-filter="shortlist" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-amber-300">⭐ Selected (<span id="shortlistTabCount">0</span>)</button>
-          <button data-filter="profile" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-purple-300">🎯 Profile Picks (7)</button>
-          <button data-filter="international" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-blue-300">🌍 International (406)</button>
-          <button data-filter="remote" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-emerald-300">🏠 Remote (70)</button>
-          <button data-filter="hybrid" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-amber-300">🏢 Hybrid (208)</button>
-          <button data-filter="onsite" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-slate-300">📍 On-site (320)</button>
+          <button data-filter="profile" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-purple-300">🎯 Profile Picks (<span id="countProfile">{total_profile}</span>)</button>
+          <button data-filter="international" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-blue-300">🌍 International (<span id="countInternational">{total_international}</span>)</button>
+          <button data-filter="remote" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-emerald-300">🏠 Remote (<span id="countRemote">{total_remote}</span>)</button>
+          <button data-filter="hybrid" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-amber-300">🏢 Hybrid (<span id="countHybrid">{total_hybrid}</span>)</button>
+          <button data-filter="onsite" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-slate-300">📍 On-site (<span id="countOnsite">{total_onsite}</span>)</button>
+          <button data-filter="not_available" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-rose-400 border border-rose-500/30">🚫 Not Available (<span id="countNotAvailable">{total_not_available}</span>)</button>
 
           <!-- Quick Toggle for Hide Applied on the filter bar -->
           <button 
@@ -412,8 +434,16 @@ def build_gui():
                 <h3 id="detailTitle" class="text-sm font-bold text-white mt-0.5 leading-snug">Senior AI Engineer</h3>
               </div>
               
-              <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
-                <span id="detailWorkplaceBadge" class="px-2 py-0.5 rounded-full font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Remote</span>
+              <div class="flex flex-wrap items-center gap-2 text-[11px]">
+                <div class="inline-flex items-center gap-1.5 bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800">
+                  <span class="text-slate-400 font-semibold text-[10px]">Workplace:</span>
+                  <select id="detailWorkplaceSelect" class="bg-transparent text-xs font-bold focus:outline-none cursor-pointer">
+                    <option value="Remote" class="bg-slate-900 text-emerald-400">🏠 Remote</option>
+                    <option value="Hybrid" class="bg-slate-900 text-amber-400">🏢 Hybrid</option>
+                    <option value="On-site" class="bg-slate-900 text-slate-300">📍 On-site</option>
+                    <option value="Not Available" class="bg-slate-900 text-rose-400 font-bold">🚫 Not Available</option>
+                  </select>
+                </div>
                 <span id="detailEmploymentBadge" class="px-2 py-0.5 rounded-full font-medium bg-slate-800 text-slate-300 border border-slate-700">Full-time</span>
                 <span id="detailLocation" class="px-2 py-0.5 rounded-full font-medium bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1">
                   📍 Location
@@ -745,7 +775,7 @@ def build_gui():
     const detailJobId = document.getElementById('detailJobId');
     const detailCompany = document.getElementById('detailCompany');
     const detailTitle = document.getElementById('detailTitle');
-    const detailWorkplaceBadge = document.getElementById('detailWorkplaceBadge');
+    const detailWorkplaceSelect = document.getElementById('detailWorkplaceSelect');
     const detailEmploymentBadge = document.getElementById('detailEmploymentBadge');
     const detailLocation = document.getElementById('detailLocation');
     const detailPostedDate = document.getElementById('detailPostedDate');
@@ -874,6 +904,40 @@ def build_gui():
     }}
     syncBackendApplications();
 
+    // Workplace overrides management
+    let workplaceOverrides = {{}};
+    try {{
+      workplaceOverrides = JSON.parse(localStorage.getItem('job_workplace_overrides') || '{{}}');
+    }} catch (e) {{
+      workplaceOverrides = {{}};
+    }}
+
+    // Apply local workplace overrides to allJobs
+    Object.keys(workplaceOverrides).forEach(jid => {{
+      const job = allJobs.find(j => String(j.id) === String(jid));
+      if (job) job.workplace_type = workplaceOverrides[jid];
+    }});
+
+    async function syncBackendOverrides() {{
+      try {{
+        const res = await fetch('/api/jobs/overrides');
+        if (res.ok) {{
+          const backendOverrides = await res.json();
+          if (backendOverrides && typeof backendOverrides === 'object') {{
+            workplaceOverrides = {{ ...backendOverrides, ...workplaceOverrides }};
+            localStorage.setItem('job_workplace_overrides', JSON.stringify(workplaceOverrides));
+            Object.keys(workplaceOverrides).forEach(jid => {{
+              const job = allJobs.find(j => String(j.id) === String(jid));
+              if (job) job.workplace_type = workplaceOverrides[jid];
+            }});
+            updateFilterCounts();
+            applyFilters(false);
+          }}
+        }}
+      }} catch (err) {{}}
+    }}
+    syncBackendOverrides();
+
     function saveShortlist() {{
       localStorage.setItem('shortlisted_job_ids', JSON.stringify([...shortlistedIds]));
       updateShortlistCounters();
@@ -971,14 +1035,104 @@ def build_gui():
       }}
     }}
 
+    function getWorkplaceColorClass(wp) {{
+      if (wp === 'Remote') return 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 hover:border-emerald-400';
+      if (wp === 'Hybrid') return 'bg-amber-500/15 text-amber-300 border-amber-500/40 hover:border-amber-400';
+      if (wp === 'Not Available') return 'bg-rose-500/20 text-rose-300 border-rose-500/50 hover:border-rose-400 font-bold';
+      return 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-500';
+    }}
+
+    function getWorkplaceSelectHtml(wp, jid, extraClass = '') {{
+      const colorClass = getWorkplaceColorClass(wp);
+      return `
+        <select 
+          class="workplace-select rounded-md px-2 py-0.5 text-[11px] font-semibold border focus:outline-none cursor-pointer transition shadow-sm ${{colorClass}} ${{extraClass}}" 
+          data-id="${{jid}}" 
+          onchange="window.handleWorkplaceChange('${{jid}}', this.value, event)" 
+          onclick="event.stopPropagation()"
+          title="Change workplace type or mark as Not Available"
+        >
+          <option value="Remote" class="bg-slate-900 text-emerald-400" ${{wp === 'Remote' ? 'selected' : ''}}>🏠 Remote</option>
+          <option value="Hybrid" class="bg-slate-900 text-amber-400" ${{wp === 'Hybrid' ? 'selected' : ''}}>🏢 Hybrid</option>
+          <option value="On-site" class="bg-slate-900 text-slate-300" ${{wp === 'On-site' ? 'selected' : ''}}>📍 On-site</option>
+          <option value="Not Available" class="bg-slate-900 text-rose-400 font-bold" ${{wp === 'Not Available' ? 'selected' : ''}}>🚫 Not Available</option>
+        </select>
+      `;
+    }}
+
     function getWorkplaceBadge(wp) {{
-      if (wp === 'Remote') {{
-        return `<span class="px-2 py-0.5 rounded font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Remote</span>`;
-      }} else if (wp === 'Hybrid') {{
-        return `<span class="px-2 py-0.5 rounded font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Hybrid</span>`;
-      }} else {{
-        return `<span class="px-2 py-0.5 rounded font-medium bg-slate-800 text-slate-300 border border-slate-700">On-site</span>`;
+      return getWorkplaceSelectHtml(wp, '');
+    }}
+
+    window.handleWorkplaceChange = function(jid, newWp, event) {{
+      if (event) event.stopPropagation();
+      updateJobWorkplace(jid, newWp);
+    }};
+
+    async function updateJobWorkplace(jid, newWp) {{
+      jid = String(jid);
+      const job = allJobs.find(j => String(j.id) === jid);
+      if (job) {{
+        job.workplace_type = newWp;
       }}
+
+      workplaceOverrides[jid] = newWp;
+      localStorage.setItem('job_workplace_overrides', JSON.stringify(workplaceOverrides));
+
+      if (appliedJobs[jid]) {{
+        appliedJobs[jid].workplace_type = newWp;
+        saveAppliedJobs();
+        syncApplicationsToBackend();
+      }}
+
+      if (selectedJob && String(selectedJob.id) === jid) {{
+        selectedJob.workplace_type = newWp;
+        if (detailWorkplaceSelect) {{
+          detailWorkplaceSelect.value = newWp;
+          detailWorkplaceSelect.className = `bg-transparent text-xs font-bold focus:outline-none cursor-pointer ${{getWorkplaceColorClass(newWp)}}`;
+        }}
+      }}
+
+      try {{
+        fetch('/api/jobs/update_workplace', {{
+          method: 'POST',
+          headers: {{ 'Content-Type': 'application/json' }},
+          body: JSON.stringify({{ job_id: jid, workplace_type: newWp }})
+        }}).catch(() => {{}});
+      }} catch (e) {{}}
+
+      updateFilterCounts();
+      applyFilters(false);
+      renderTrackerTable();
+
+      if (newWp === 'Not Available') {{
+        showToast("🚫 Job marked Not Available & removed from active search.", "info");
+      }} else {{
+        showToast(`Workplace updated to ${{newWp}}`, "success");
+      }}
+    }}
+
+    function updateFilterCounts() {{
+      const notAvailableCount = allJobs.filter(j => j.workplace_type === 'Not Available').length;
+      const availableJobs = allJobs.filter(j => j.workplace_type !== 'Not Available');
+      
+      const countAllEl = document.getElementById('countAll');
+      const countProfileEl = document.getElementById('countProfile');
+      const countInternationalEl = document.getElementById('countInternational');
+      const countRemoteEl = document.getElementById('countRemote');
+      const countHybridEl = document.getElementById('countHybrid');
+      const countOnsiteEl = document.getElementById('countOnsite');
+      const countNotAvailableEl = document.getElementById('countNotAvailable');
+      const headerTotalEl = document.getElementById('headerTotalJobsCount');
+
+      if (countAllEl) countAllEl.textContent = availableJobs.length;
+      if (countProfileEl) countProfileEl.textContent = availableJobs.filter(j => j.is_profile).length;
+      if (countInternationalEl) countInternationalEl.textContent = availableJobs.filter(j => j.is_international).length;
+      if (countRemoteEl) countRemoteEl.textContent = allJobs.filter(j => j.workplace_type === 'Remote').length;
+      if (countHybridEl) countHybridEl.textContent = allJobs.filter(j => j.workplace_type === 'Hybrid').length;
+      if (countOnsiteEl) countOnsiteEl.textContent = allJobs.filter(j => j.workplace_type === 'On-site').length;
+      if (countNotAvailableEl) countNotAvailableEl.textContent = notAvailableCount;
+      if (headerTotalEl) headerTotalEl.textContent = `${{availableJobs.length}} Roles`;
     }}
 
     function applyFilters(resetPage = true) {{
@@ -988,6 +1142,14 @@ def build_gui():
         // Hide applied filter
         const isApplied = Boolean(appliedJobs[String(j.id)]);
         if (hideApplied && isApplied) return false;
+
+        // If currently viewing 'not_available' tab, show ONLY Not Available jobs!
+        if (currentFilter === 'not_available') {{
+          if (j.workplace_type !== 'Not Available') return false;
+        }} else {{
+          // In all other tabs, hide Not Available jobs!
+          if (j.workplace_type === 'Not Available') return false;
+        }}
 
         // Filter tabs
         if (currentFilter === 'shortlist' && !shortlistedIds.has(String(j.id))) return false;
@@ -1108,8 +1270,8 @@ def build_gui():
               <div class="font-medium text-white truncate max-w-[220px]" title="${{j.title}}">${{j.title}}</div>
               <div class="text-[10px] text-slate-400 truncate max-w-[220px]">${{j.matched_skills.join(' · ') || 'General AI'}}</div>
             </td>
-            <td class="py-2.5 px-3 text-center">
-              ${{getWorkplaceBadge(j.workplace_type)}}
+            <td class="py-2 px-2 text-center" onclick="event.stopPropagation()">
+              ${{getWorkplaceSelectHtml(j.workplace_type, j.id)}}
             </td>
             <td class="py-2.5 px-3 text-slate-300 truncate max-w-[140px]" title="${{j.location}}">
               ${{j.location}}
@@ -1152,11 +1314,10 @@ def build_gui():
       detailLocation.textContent = `📍 ${{job.location}}`;
       detailPostedDate.textContent = `Posted: ${{job.date_posted || 'Recent'}}`;
 
-      detailWorkplaceBadge.className = 'px-2 py-0.5 rounded-full font-medium ' + 
-        (job.workplace_type === 'Remote' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
-         job.workplace_type === 'Hybrid' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 
-         'bg-slate-800 text-slate-300 border border-slate-700');
-      detailWorkplaceBadge.textContent = job.workplace_type;
+      if (detailWorkplaceSelect) {{
+        detailWorkplaceSelect.value = job.workplace_type || 'On-site';
+        detailWorkplaceSelect.className = `bg-transparent text-xs font-bold focus:outline-none cursor-pointer ${{getWorkplaceColorClass(job.workplace_type || 'On-site')}}`;
+      }}
 
       detailEmploymentBadge.textContent = job.employment_type;
       detailApplyLink.href = job.apply_link;
@@ -1278,8 +1439,8 @@ def build_gui():
                 data-id="${{app.job_id}}" 
               />
             </td>
-            <td class="py-3 px-4">
-              ${{getWorkplaceBadge(app.workplace_type || 'On-site')}}
+            <td class="py-3 px-4" onclick="event.stopPropagation()">
+              ${{getWorkplaceSelectHtml(app.workplace_type || 'On-site', app.job_id, 'w-full')}}
             </td>
             <td class="py-3 px-4">
               <input 
@@ -1523,6 +1684,14 @@ def build_gui():
       applyFilters();
     }});
 
+    if (detailWorkplaceSelect) {{
+      detailWorkplaceSelect.addEventListener('change', (e) => {{
+        if (selectedJob) {{
+          updateJobWorkplace(selectedJob.id, e.target.value);
+        }}
+      }});
+    }}
+
     prevPageBtn.addEventListener('click', () => {{
       if (currentPage > 1) {{
         currentPage--;
@@ -1721,6 +1890,7 @@ def build_gui():
     }});
 
     // Initial render
+    updateFilterCounts();
     updateShortlistCounters();
     updateAppliedCounters();
     updateHideAppliedUI();
