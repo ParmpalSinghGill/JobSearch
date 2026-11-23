@@ -1,0 +1,275 @@
+﻿Company Name,Job Profile,Workplace Type,Employment Type,Location,Date of Job Posting,Link to Apply,Job Description,Relative Time,Search Query
+Grazitti Interactive,Lead AI Developer,Remote,Full-time,"Panchkula, Haryana, India",2026-11-22,https://www.linkedin.com/jobs/view/4444242353,"Job Description
+
+We are looking for a Lead AI Developer with 5–6 years of experience to drive our AI initiatives and build scalable, production-ready intelligent systems. This role goes beyond development—you will define AI architecture, lead a team of developers, and bring structure to how AI solutions are designed, deployed, and improved over time.
+
+You will work closely with cross-functional teams to turn advanced AI concepts into practical business solutions while mentoring developers and promoting continuous learning across the team.
+
+Key Skills
+
+Strong proficiency in Python, including frameworks like FastAPI, Pydantic, and AsyncIO.Hands-on experience with LLM frameworks such as LangChain, LlamaIndex, or CrewAI.Deep understanding of prompt engineering, Retrieval-Augmented Generation (RAG), and model evaluation techniques.Experience with vector databases such as Pinecone, Weaviate, or Milvus.Strong knowledge of cloud platforms including AWS, Azure, or GCP.Familiarity with containerization and orchestration tools like Docker and Kubernetes.Working knowledge of machine learning frameworks such as PyTorch or TensorFlow.Strong problem-solving, leadership, and communication skills.
+
+Roles And Responsibilities
+
+Design and deploy scalable AI applications using Python, focusing on LLM orchestration and advanced workflows.Lead and mentor a team of developers, ensuring high code quality through regular reviews and technical guidance.Stay updated with the latest advancements in AI and translate them into practical implementations.Evaluate third-party AI tools and open-source models to identify the most efficient solutions.Manage the complete AI development lifecycle, including data ingestion, vectorization, deployment, and monitoring.Collaborate with stakeholders to align AI initiatives with business objectives.Drive best practices in AI architecture, performance optimization, and scalability.",Profile Recommendation,LinkedIn Profile Recommendations
+FullStack,AI Machine Learning Engineer - Remote - India,Remote,Full-time,India,2026-11-22,https://www.linkedin.com/jobs/view/4475049113,"About FullStack
+
+FullStack is your AI-native engineering partner, built to turn AI capability into certainty. Most companies can demo AI; few can get it to production and prove what it produced. We close that gap with three capabilities, AI built into your products from the start, elite vetted talent who apply it, and transparent execution that shows value every step of the way. With now over 600 customers in North America, FullStack is one integrated partner for all your AI engineering needs. With FullStack, you move forward with confidence.
+
+We’re Most Proud Of
+
+Offering life-changing career opportunities to talented software professionals across the Americas.Building highly-skilled software development teams for hundreds of the world’s greatest companies.Having delivered hundreds of successful custom software solutions, which have positively impacted the lives and careers of millions of users.Our 4.1-star rating on GlassDoor.Our client Net Promoter Score of 68, twice the industry average.
+
+The Opportunity
+
+Join our talent network and connect with U.S. clients for flexible, project-based development work as an AI Machine Learning Engineer.
+
+You will integrate directly into our client's team and work alongside their existing designers and engineers on a daily basis.
+
+What We're Looking For
+
+4+ years of professional experience as an Artificial Intelligence Engineer, Machine Learning Engineer, or similar role.Advanced English is required.Successful completion of a four-year college degree is required.Proven experience developing and optimizing AI/ML models using Python and frameworks like LangChain.Deep understanding of large language models (LLMs), prompt engineering, and the latest trends in generative AI.Hands-on experience with retrieval-augmented generation (RAG) techniques and vector databases (e.g., FAISS, Pinecone, Weaviate).Solid experience integrating and deploying AI/ML solutions into production environments.Ability to design and maintain scalable, reliable AI infrastructure on cloud platforms such as AWS, GCP, or Azure.Strong skills in documenting AI/ML workflows, architectural decisions, and best practices.Experience with MLOps, CI/CD pipelines, and maintaining production-grade AI systems.Ability to work through new and difficult issues and contribute to libraries as needed.Ability to create and maintain continuous integration and delivery of applications.Forensic attention to detail.A positive mindset and a can-do attitude.Experience working on Agile / Scrum teams.Meaningful experience working on large, complex systems.Ability to take extreme ownership over your work. Every day is a challenge to ensure you are performing to the expectations you and your team have agreed upon.Ability to identify with the goals of FullStack's clients, and dedicate yourself to delivering on the commitments you and your team make to them.Ability to consistently work 40 hours per week. 
+
+Work Authorization Requirements
+
+Applicants must be currently authorized to work in the country of this job posting on a full-time basis.FullStack will not sponsor applicants for work visas now or in the future.
+
+What We Offer
+
+Competitive pay.100% remote work.The ability to work with leading startups and Fortune 500 companies.Continuing education opportunities.Opportunity to grow and expand your career.
+
+Our talent network is committed to fostering a diverse, inclusive, and accessible environment where IT professionals can find opportunities that match their skills. We welcome individuals of all races, religions, genders, sexual orientations, national origins, abilities, and experiences. Our focus is on connecting talent with projects based on qualifications, ensuring a fair and transparent process that values diverse perspectives and global collaboration.
+
+Learn more about our Applicants Privacy Notice.",Profile Recommendation,LinkedIn Profile Recommendations
+Oceaneering,Senior Data Scientist,Remote,Full-time,"Chandigarh, Chandigarh, India",2026-11-22,https://www.linkedin.com/jobs/view/4482095307,"Job Description
+
+The Senior Data Scientist (Computer Vision, Robotics and Autonomy) will develop, test, and deploy machine learning, perception, and autonomy solutions for inspection, navigation, intervention, and related operational needs. Working within established product and system architectures, the role contributes computer vision, sensor-fusion, localization, mapping, planning, control, and data-analysis capabilities. The position is a hands-on senior individual contributor who owns assigned technical tasks or defined work packages, collaborates with cross-functional teams, supports field validation, and provides peer guidance without holding organization-wide architecture or research leadership responsibility.
+
+Responsibilities
+
+ Develop, test, and integrate computer vision and robotic-perception components for detection, classification, tracking, inspection, measurement, and scene understanding under guidance from product or technical leads.  Implement and evaluate sensor-fusion methods using cameras, sonar, lidar, radar, inertial sensors, depth sensors, and vehicle telemetry within defined system interfaces.  Contribute to visual, sonar, and multi-sensor SLAM, localization, mapping, calibration, state-estimation, and uncertainty-management capabilities for challenging environments.  Implement and evaluate path, trajectory, task, and behavior-planning methods, including obstacle avoidance and motion-control interfaces, for defined operational scenarios.  Apply suitable deep-learning, reinforcement-learning, imitation-learning, or human-in-the-loop techniques to scoped problems using agreed validation criteria and safety controls.  Prepare and maintain datasets through collection, annotation, quality checks, synthetic-data generation, augmentation, experiment execution, and performance analysis.  Use established simulation and verification workflows for software-in-the-loop, hardware-in-the-loop, scenario-based, sim-to-real, and field testing.  Convert allocated customer and system requirements into component designs, interfaces, implementation tasks, tests, and traceable engineering evidence.  Own defined technical tasks or work packages and contribute to architecture and design reviews by identifying implementation risks and recommending practical mitigations.  Develop proof-of-concept implementations and prototypes, then help mature approved concepts into maintainable, testable, production-quality components.  Optimize and deploy algorithms on edge and real-time computing platforms within agreed accuracy, latency, throughput, power, reliability, and hardware constraints.  Collaborate with software, systems, controls, electrical/electronics, mechanical, test, and operations teams to integrate assigned autonomy capabilities into complete products.  Assess selected third-party and open-source components, documenting technical trade-offs, licensing considerations, integration risks, and findings for review.  Maintain awareness of relevant research and engineering practices and recommend applicable improvements to assigned products or work packages.  Share technical knowledge, review work, support less-experienced colleagues, communicate progress and risks, and contribute to technical reports, demonstrations, proposals, and customer discussions. 
+
+Required
+
+ QUALIFICATIONS 
+
+ Bachelor’s degree in computer science, Data Science, Artificial Intelligence, Machine Learning, Robotics, Electrical/Electronics Engineering, Software Engineering, or a related engineering field, with five or more years of relevant professional experience in computer vision, robotics, autonomous systems, or applied machine learning.
+
+OR 
+
+ Master’s degree in computer science, Data Science, Artificial Intelligence, Machine Learning, Robotics, Electrical/Electronics Engineering, Software Engineering, or a related engineering field, with three or more years of relevant professional experience in computer vision, robotics, autonomous systems, or applied machine learning. 
+
+DESIRED
+
+ Strong programming skills in Python and C++, with sound object-oriented design, software engineering, debugging, testing, and version-control practices.  Hands-on experience with computer vision, image processing, deep learning, and 3D perception using frameworks or libraries such as OpenCV, PCL, PyTorch, TensorFlow, ONNX, or equivalent technologies.  Practical experience in robotic perception, multi-sensor fusion, visual or sonar SLAM, localization, mapping, calibration, state estimation, or navigation.  Knowledge of path planning, trajectory generation, task and behavior planning, obstacle avoidance, motion control, and autonomous decision-making.  Experience with reinforcement learning, imitation learning, offline reinforcement learning, human-in-the-loop learning, or RLHF is desirable where relevant to robotics and autonomy.  Experience with ROS or ROS 2 and robotics simulation environments such as Gazebo, NVIDIA Isaac Sim, MATLAB/Simulink, or comparable tools.  Experience with synthetic data, scenario generation, software-in-the-loop or hardware-in-the-loop testing, sim-to-real transfer, field validation, and safety-oriented verification of autonomy functions.  Experience deploying optimized AI and robotics workloads to edge accelerators and real-time systems, such as NVIDIA Jetson, GPUs, embedded Linux platforms, or equivalent hardware.  Working knowledge of Linux and Windows, CI/CD, containers, MLOps or DevOps practices, model versioning, experiment tracking, and reproducible deployment.  Experience with Azure Machine Learning or comparable cloud AI/ML services is desirable.  Strong foundation in linear algebra, geometry, optimization, probability, statistics, estimation theory, and numerical methods.  Ability to implement defined technical approaches, evaluate alternatives within an assigned scope, identify technical risks, and communicate design rationale and results to technical and non-technical stakeholders.  Experience with subsea, offshore, inspection, intervention, mobile robotics, remote operations, or other safety- and reliability-critical systems is an advantage.
+
+Knowledge, Skills, Abilities, and Other Characteristics 
+
+ Ability to analyze situations accurately, utilizing a variety of analytical techniques in order to make well informed decisions  Ability to effectively prioritize and execute tasks in a high-pressure environment  Skill to gather, analyze and interpret data  Ability to determine and meet customer needs  Ensures that others involved in a project or effort are kept informed about developments and plans  Knowledge of communication styles and techniques  Ability to establish and maintain cooperative working relationships  Skill to prioritize workflow in a changing work environment  Knowledge of applicable data privacy practices and laws  Strong analytical and problem-solving skills. 
+
+About Us
+
+Oceaneering is a global provider of engineered services and products, primarily to the offshore energy industry. We develop products and services for use throughout the lifecycle of an offshore oilfield, from drilling to decommissioning. We operate the world's premier fleet of work class ROVs. Additionally, we are a leader in offshore oilfield maintenance services, umbilicals, subsea hardware, and tooling. We also use applied technology expertise to serve the defense, material handling, aerospace, science, and renewable energy industries.
+
+Overview
+
+ ABOUT THE TEAM 
+
+Since year 2003, Oceaneering’s India Center has been an integral part of operations for Oceaneering’s robust product and service offerings across the globe. This center caters to diverse business needs, from oil and gas field infrastructure, subsea robotics to automated material handling & logistics.
+
+Our multidisciplinary team offers a wide spectrum of solutions, encompassing Subsea Engineering, Robotics, Automation, Control Systems, Software Development, Asset Integrity Management, Inspection, ROV operations, Field Network Management, Graphics Design & Animation, and more.
+
+In addition to these technical functions, Oceaneering India Center plays host to several crucial business functions, including Finance, Supply Chain Management (SCM), Information Technology (IT), Human Resources (HR), and Health, Safety & Environment (HSE).
+
+Our world class infrastructure in India includes modern offices, industry-leading tools and software, equipped labs, and beautiful campuses aligned with the future way of work. Oceaneering in India as well as globally has a great work culture that is flexible, transparent, and collaborative with great team synergy.
+
+At Oceaneering India Center, we take pride in “Solving the Unsolvable” by leveraging the diverse expertise within our team. Join us in shaping the future of technology and engineering solutions on a global scale.",Profile Recommendation,LinkedIn Profile Recommendations
+Oceaneering,Principal Data Scientist,Remote,Full-time,"Chandigarh, Chandigarh, India",2026-11-22,https://www.linkedin.com/jobs/view/4482476432,"Job Description
+
+The Principal Data Scientist (Computer Vision and Robotics) will develop machine learning, deep learning, perception, and autonomous-system solutions that address customer needs such as topside and subsea inspection, navigation, and intervention. The role is responsible for machine vision, sensor-fusion, localization, path-planning, decision-making, and data-analytics algorithms for Oceaneering’s next-generation robotic and autonomous systems.
+
+Responsibilities
+
+ Lead and guide engineers on product and prototype design and development assignments across software, computer vision, robotics, machine learning, deep learning, and autonomous systems  Architect perception and autonomy solutions through appropriate selection of cameras, sonar, LiDAR, inertial sensors, compute platforms, middleware, and algorithms  Lead advanced research and development in computer vision, robotic perception, multi-sensor fusion, visual/sonar SLAM, localization, mapping, and autonomous navigation  Work with third parties to utilize off the shelf industrial solutions  Iteratively develop proof-of-concept implementations, prototypes and demos to fine-tune technologies to practical, state of the art systems  Innovate and develop algorithms for object detection, tracking and classification, pose estimation, obstacle avoidance, trajectory prediction, motion planning, and closed-loop robotic decision-making  Develop and evaluate path-planning, task-planning, behavior-planning, and control approaches for robots operating in dynamic, uncertain, and GPS-denied environments  Apply reinforcement learning (RL), imitation learning, offline RL, and human-feedback approaches, including RLHF where appropriate, to improve autonomous decision-making while maintaining safety, explainability, and operational constraints  Build simulation, synthetic-data, hardware-in-the-loop, and field-validation workflows; define autonomy metrics and verify robustness, fail-safe behavior, and sim-to-real performance  Algorithm development on key research areas based on client’s technical problem. This requires constant paper reading, and staying ahead of the game by knowing what is and will be state of the art in this field.  Ability to work hands-on in cross-functional teams with a strong sense of self-direction  Develop an awareness of programming and design alternatives  Cultivate and disseminate knowledge of application development best practices  Gather statistics and prepare and write reports on the status of the programming process for discussion with management and/or team members  Direct research on emerging application development software products, languages, and standards in support of procurement and development efforts  Train, manage and provide guidance to junior staff  Perform all other duties as requested, directed or assigned 
+
+Required
+
+ QUALIFICATIONS 
+
+ Bachelor’s degree in computer science, Robotics, Artificial Intelligence, Electrical/Electronics Engineering, Software Engineering, or a related field, with eight or more years of experience delivering computer vision, deep learning, robotics, or autonomous-system projects 
+
+OR
+
+ Master’s degree in computer science, Robotics, Artificial Intelligence, Electrical/Electronics Engineering, Software Engineering, or a related field, with six or more years of experience delivering computer vision, deep learning, robotics, or autonomous-system projects 
+
+DESIRED
+
+ Knowledge of inner working of any vision software (such as OpenCV, PCL, CNN, Visual Transformers)  Experience with robotics frameworks and simulators such as ROS/ROS 2, Gazebo, Isaac Sim, MATLAB/Simulink, or equivalent platforms  Strong understanding of autonomous navigation, kinematics and dynamics, state estimation, sensor calibration and fusion, SLAM, path and trajectory planning, motion control, and safety-aware autonomy  Hands-on experience with reinforcement learning libraries and techniques, including policy optimization, reward design, imitation learning, offline RL, human-in-the-loop learning, and RLHF concepts  Experience deploying real-time perception and autonomy workloads on edge accelerators, with working knowledge of deterministic performance, latency optimization, telemetry, MLOps, and field diagnostics  Technically fluent in programming languages, including Python, C, C++, Java, C# and other object-oriented paradigms  Competent and proficient understanding of platforms such as UNIX (Solaris and Linux) and Windows  Hands-on software troubleshooting experience  Must be able to learn, understand, and apply new technologies  Strong coding skills.  Edge based and/or cloud-based AI/ML Code deployment experience (DevOps)  Experience with Azure Cloud based ML services  Experience in computer vision, image processing and other related applied engineering fields.  Strong background in mathematics and/or statistics is highly desirable.  Knowledge of git and version control  Familiarity with NVIDIA's Jetson Board & Deep Stream Framework on Linux/Ubuntu machines 
+
+Knowledge, Skills, Abilities, And Other Characteristics
+
+ Ability to analyze situations accurately, utilizing a variety of analytical techniques in order to make well informed decisions  Ability to effectively prioritize and execute tasks in a high-pressure environment  Skill to gather, analyze and interpret data  Ability to determine and meet customer needs  Ensures that others involved in a project or effort are kept informed about developments and plans  Knowledge of communication styles and techniques  Ability to establish and maintain cooperative working relationships  Skill to prioritize workflow in a changing work environment  Knowledge of applicable data privacy practices and laws  Strong analytical and problem-solving skills. 
+
+About Us
+
+Oceaneering is a global provider of engineered services and products, primarily to the offshore energy industry. We develop products and services for use throughout the lifecycle of an offshore oilfield, from drilling to decommissioning. We operate the world's premier fleet of work class ROVs. Additionally, we are a leader in offshore oilfield maintenance services, umbilicals, subsea hardware, and tooling. We also use applied technology expertise to serve the defense, material handling, aerospace, science, and renewable energy industries.
+
+Overview
+
+ ABOUT THE TEAM 
+
+Since year 2003, Oceaneering’s India Center has been an integral part of operations for Oceaneering’s robust product and service offerings across the globe. This center caters to diverse business needs, from oil and gas field infrastructure, subsea robotics to automated material handling & logistics.
+
+Our multidisciplinary team offers a wide spectrum of solutions, encompassing Subsea Engineering, Robotics, Automation, Control Systems, Software Development, Asset Integrity Management, Inspection, ROV operations, Field Network Management, Graphics Design & Animation, and more.
+
+In addition to these technical functions, Oceaneering India Center plays host to several crucial business functions, including Finance, Supply Chain Management (SCM), Information Technology (IT), Human Resources (HR), and Health, Safety & Environment (HSE).
+
+Our world class infrastructure in India includes modern offices, industry-leading tools and software, equipped labs, and beautiful campuses aligned with the future way of work. Oceaneering in India as well as globally has a great work culture that is flexible, transparent, and collaborative with great team synergy.
+
+At Oceaneering India Center, we take pride in “Solving the Unsolvable” by leveraging the diverse expertise within our team. Join us in shaping the future of technology and engineering solutions on a global scale.",Profile Recommendation,LinkedIn Profile Recommendations
+Uplers,Senior AI Engineer - Hybrid || Bangalore,Remote,Full-time,India,2026-11-22,https://www.linkedin.com/jobs/view/4491558163,"Experience: 4.00 + years
+
+Salary: INR 2000000-4900000 / year (based on experience)
+
+Expected Notice Period: 15 Days
+
+Shift: (GMT+05:30) Asia/Kolkata (IST)
+
+Opportunity Type: Hybrid ()
+
+Placement Type: Full Time Permanent position(Payroll and Compliance to be managed by: Agentic platform for enterprise transformation)
+
+(*Note: This is a requirement for one of Uplers' client - Agentic platform for enterprise transformation)
+
+What do you need for this opportunity?
+
+Must have skills required:
+
+expertise in generative AI, Proven experience leading AI/ML teams, (GPT, and the modern LLM/agentic, BERT), gans, Python and frameworks such as PyTorch and TensorFlow, vaes
+
+Agentic platform for enterprise transformation is Looking for: 
+
+Roles and Responsibilities
+
+ Lead the AI Vision & Transformation
+
+
+Own and articulate client’s AI strategy as we scale to large enterprises. You’ll set the technical roadmap, define how reasoning, orchestration, and agentic AI evolve in our platform, and translate that vision into outcomes our customers can feel. Your grounding in generative AI—knowledge graphs, RAG (including knowledge-based RAG), prompt engineering, fine-tuning, data modeling, and ontologies—lets you push the boundary of what the product can do.
+
+ Architect with Technique & Precision
+
+
+We move fast without compromising quality. Your command of generative AI techniques—transformer-based architectures (GPT, BERT), VAEs, GANs, and the modern LLM/agentic toolchain—lets you design AI solutions that are robust, scalable, secure, and production-ready. You set the engineering bar: evaluation, observability, and responsible-AI practices that hold up under enterprise scrutiny.
+
+ Build & Lead the Team
+
+
+You’re not just joining a team—you’re leading one. You’ll grow, mentor, and unblock a diverse group of engineers, set technical standards, and create the conditions for great work. You collaborate seamlessly across product, design, and customer-facing teams to bring ambitious AI projects to life on time and at quality.
+
+ Engage Customers & Drive Outcomes
+
+
+You’re articulate and credible with senior enterprise stakeholders. You translate customer needs into AI capability, communicate complex ideas simply, and partner with go-to-market teams to turn our AI advantage into adoption and trust.
+
+ Stay at the Frontier
+
+
+Our environment thrives on continual learning. You experiment with emerging techniques, anticipate shifts in the AI landscape, and bring a growth mindset that keeps our client—and the team around you—at the leading edge.
+
+What You Bring
+
+Proven experience leading AI/ML teams and owning the architecture of complex, production AI systems at scale.Deep expertise in generative AI: LLMs, RAG and knowledge-based RAG, knowledge graphs, prompt engineering, fine-tuning, and agentic / multi-agent systems.Strong foundations in ML, NLP, data modeling, and ontologies fluency in Python and frameworks such as PyTorch and TensorFlow.Experience building for enterprise: security, scalability, data governance, evaluation, and responsible/ethical AI.Excellent communication—able to influence engineers, executives, and enterprise customers alike.A track record of mentoring engineers and raising the technical bar of a team.
+
+
+How to apply for this opportunity?
+
+Step 1: Click On Apply! And Register or Login on our portal.Step 2: Complete the Screening Form & Upload updated ResumeStep 3: Increase your chances to get shortlisted & meet the client for the Interview!
+
+
+About Uplers:
+
+Our goal is to make hiring reliable, simple, and fast. Our role will be to help all our talents find and apply for relevant contractual onsite opportunities and progress in their career. We will support any grievances or challenges you may face during the engagement.
+
+(Note: There are many more opportunities apart from this on the portal. Depending on the assessments you clear, you can apply for them as well).
+
+So, if you are ready for a new challenge, a great work environment, and an opportunity to take your career to the next level, don't hesitate to apply today. We are waiting for you!",Profile Recommendation,LinkedIn Profile Recommendations
+Uplers,Senior Data Scientist,Remote,Full-time,India,2026-11-22,https://www.linkedin.com/jobs/view/4492046447,"Experience: 6.00 + years
+
+Salary: INR 3000000-4000000 / year (based on experience)
+
+Expected Notice Period: 30 Days
+
+Shift: (GMT+05:30) Asia/Kolkata (IST)
+
+Opportunity Type: Remote
+
+Placement Type: Full Time Permanent position(Payroll and Compliance to be managed by: Auric AI)
+
+(*Note: This is a requirement for one of Uplers' client - Auric AI)
+
+What do you need for this opportunity?
+
+Must have skills required:
+
+Sagemaker, Financial risk modeling, LightGBM/XGBoost, Ml model development, Ml model training, Predictive Modeling, Scikit-learn, Sklearn, XgBoost, Python, Regression Analysis
+
+Auric AI is Looking for:
+
+Auric AI builds AI and data solutions that help businesses make better decisions through machine learning, data platforms, and agentic AI applications.
+
+
+
+
+Role Overview
+
+We are looking for a Senior Data Scientist who can develop, validate, and deploy machine-learning models to solve business problems. The role involves working closely with engineering teams and business stakeholders to deliver production-ready solutions.
+
+
+Key Responsibilities
+
+Develop ML models for forecasting, classification, segmentation, recommendation, and anomaly detection.Work on NLP and LLM applications, including text classification, summarization, and semantic search.Perform data analysis, feature engineering, and experimentation.Design A/B tests and validate model performance.Deploy and monitor models using MLOps practices.Work with stakeholders to identify business opportunities and communicate insights.Mentor junior data scientists and review analytical work.
+
+
+Required Skills & Experience
+
+6–9 years of experience in Data Science or Applied Machine Learning.Strong knowledge of statistics, machine learning, and predictive modelling.Expert Python (Pandas, Polars, Scikit-learn, Statsmodels) and advanced SQL.Experience with PySpark, Spark, or Databricks.Hands-on experience with MLflow, Azure ML, AWS SageMaker, or Vertex AI.Experience deploying and monitoring production ML models.Strong analytical, problem-solving, and communication skills.Master''s degree or PhD in a relevant quantitative field, or equivalent experience.
+
+
+Preferred Skills
+
+NLP and LLM experience, including embeddings, fine-tuning, and retrieval.Experience in causal inference, optimization, or graph-based methods.Client-facing or consulting experience.Cloud certifications in AWS, Azure, or GCP.
+
+
+Technology Stack
+
+Python, SQL, PySpark, Scikit-learn, XGBoost, PyTorch, TensorFlow, Hugging Face, Databricks, Snowflake, MLflow, Docker, Git, and CI/CD.
+
+
+Success Expectations
+
+First 90 Days: Understand business requirements and deliver a validated model or analysis.First 6 Months: Deploy at least one production model with measurable business impact.
+
+
+What We Offer
+
+Opportunity to work on advanced AI and data science projects.Modern cloud and AI technology stack.Collaborative team and direct access to decision-makers.Competitive compensation, benefits, and hybrid working.
+
+
+Interview Process:
+
+L1- Technical Discussion L2- Technical CodingL3- Founder Discussion
+
+
+How to apply for this opportunity?
+
+Step 1: Click On Apply! And Register or Login on our portal.Step 2: Complete the Screening Form & Upload updated ResumeStep 3: Increase your chances to get shortlisted & meet the client for the Interview!
+
+
+About Uplers:
+
+Our goal is to make hiring reliable, simple, and fast. Our role will be to help all our talents find and apply for relevant contractual onsite opportunities and progress in their career. We will support any grievances or challenges you may face during the engagement.
+
+(Note: There are many more opportunities apart from this on the portal. Depending on the assessments you clear, you can apply for them as well).
+
+So, if you are ready for a new challenge, a great work environment, and an opportunity to take your career to the next level, don't hesitate to apply today. We are waiting for you!",Profile Recommendation,LinkedIn Profile Recommendations
+bebo Technologies,Associate Software Architect _Agentic AI,Hybrid,Full-time,"Chandigarh, India",2026-11-22,https://www.linkedin.com/jobs/view/4458935705,"Job Responsibilities:Own the end-to-end architecture of agentic AI systems, from design decisions to production rollout and stabilization.Define multi-agent system patterns for planning, execution, tool orchestration, memory management, and evaluation.Establish architectural standards for reasoning workflows, prompt orchestration, and structured output enforcement.Design and scale RAG architectures, including strategies for retrieval, grounding mechanisms, and data flow patterns.Evaluate and select LLMs, agent frameworks, and orchestration tools based on performance, cost, and use-case fit.Ensure production readiness through observability, performance tuning, and cost control strategies.Collaborate with senior engineering leaders and business stakeholders to translate requirements into clear technical direction.Set best practices and guardrails for agentic AI development across teams.Job Requirement:B.Tech, MCA, MSC(IT), or M.Tech degree in Computer Science or related field.9 to 12 years of experience in software architecture, backend systems, or AI platform development.Strong proficiency in Python and familiarity with design patterns and microservices architectures.Hands-on experience with LLMs and agent frameworks such as LangChain, LangGraph, CrewAI, AutoGen, and AutoGPT or similar.Expertise in embeddings, vector databases, and retrieval systems.Proven track record of designing scalable and maintainable systems.",Profile Recommendation,LinkedIn Profile Recommendations

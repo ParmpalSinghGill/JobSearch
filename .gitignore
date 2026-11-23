@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment and sensitive credentials
+.env
+.env.local
+.env.*.local
+
+# Temporary / OS / Editor files
+.DS_Store
+Thumbs.db
+.~lock.*
+*.tmp
+*.swp
+
+# Raw scraping run archives (transient)
+Jobs/Raw_Exports/
