@@ -275,15 +275,27 @@ def build_gui():
           <button data-filter="remote" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-emerald-300">🏠 Remote (70)</button>
           <button data-filter="hybrid" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-amber-300">🏢 Hybrid (208)</button>
           <button data-filter="onsite" class="filter-tab px-2.5 py-1 rounded-md font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 text-slate-300">📍 On-site (320)</button>
+
+          <!-- Quick Toggle for Hide Applied on the filter bar -->
+          <button 
+            id="toggleHideAppliedBtn" 
+            type="button" 
+            class="flex items-center gap-1.5 px-3 py-1 rounded-md font-semibold text-xs border transition shadow-sm bg-slate-800/90 text-slate-300 border-slate-700 hover:border-slate-500 cursor-pointer ml-1 select-none"
+            title="Toggle hiding applied jobs from view"
+          >
+            <span id="hideAppliedIcon">👁️</span>
+            <span>Hide Applied</span>
+            <span id="hideAppliedBadge" class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-slate-400">OFF</span>
+          </button>
         </div>
 
         <!-- Right Side: Hide Applied Toggle + Search + Sort -->
         <div class="flex items-center gap-3 ml-auto">
           
           <!-- HIDE APPLIED JOBS TOGGLE -->
-          <label class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950 border border-slate-700/80 hover:border-slate-600 cursor-pointer text-slate-300 font-medium text-xs transition">
+          <label class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950 border border-slate-700/80 hover:border-slate-600 cursor-pointer text-slate-300 font-medium text-xs transition select-none">
             <input type="checkbox" id="hideAppliedToggle" class="rounded bg-slate-800 border-slate-600 text-emerald-500 focus:ring-0 cursor-pointer" />
-            <span>Hide Applied Jobs</span>
+            <span>Hide Applied (<span id="appliedCountLabel">0</span>)</span>
           </label>
 
           <!-- Search Input -->
@@ -678,7 +690,7 @@ def build_gui():
     let currentSort = 'score_desc';
     let currentPage = 1;
     const pageSize = 25;
-    let hideApplied = false;
+    let hideApplied = localStorage.getItem('hide_applied_preference') === 'true';
 
     // Shortlist Set
     let shortlistedIds = new Set(JSON.parse(localStorage.getItem('shortlisted_job_ids') || '[]'));
@@ -705,8 +717,12 @@ def build_gui():
     const searchBannerText = document.getElementById('searchBannerText');
     const closeSearchBannerBtn = document.getElementById('closeSearchBannerBtn');
 
-    // DOM Elements - Explorer
+    // DOM Elements - Explorer & Hide Applied
     const hideAppliedToggle = document.getElementById('hideAppliedToggle');
+    const toggleHideAppliedBtn = document.getElementById('toggleHideAppliedBtn');
+    const hideAppliedIcon = document.getElementById('hideAppliedIcon');
+    const hideAppliedBadge = document.getElementById('hideAppliedBadge');
+    const appliedCountLabel = document.getElementById('appliedCountLabel');
     const searchInput = document.getElementById('searchInput');
     const clearSearchBtn = document.getElementById('clearSearchBtn');
     const filterTabs = document.getElementById('filterTabs');
@@ -774,6 +790,71 @@ def build_gui():
     // Initialize CV text
     cvInputText.value = localStorage.getItem('user_cv_text') || DEFAULT_CV;
 
+    // Toast notification popup
+    function showToast(msg, type = 'success') {{
+      let toast = document.getElementById('floatingToast');
+      if (!toast) {{
+        toast = document.createElement('div');
+        toast.id = 'floatingToast';
+        document.body.appendChild(toast);
+      }}
+      toast.className = `fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold flex items-center gap-2 border transition-all duration-300 transform translate-y-0 opacity-100 ${{
+        type === 'success' 
+          ? 'bg-emerald-950/95 text-emerald-200 border-emerald-500/50 shadow-emerald-950/50' 
+          : 'bg-slate-900/95 text-slate-200 border-slate-700 shadow-slate-950/50'
+      }}`;
+      toast.innerHTML = msg;
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {{
+        toast.className = 'fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-xl shadow-2xl text-xs font-semibold flex items-center gap-2 border transition-all duration-300 transform translate-y-10 opacity-0 pointer-events-none';
+      }}, 2500);
+    }}
+
+    // Global helper for direct inline button click
+    window.toggleJobAppliedById = function(jid, event) {{
+      if (event) {{
+        event.preventDefault();
+        event.stopPropagation();
+      }}
+      const job = allJobs.find(x => String(x.id) === String(jid));
+      if (job) {{
+        toggleJobApplied(job);
+      }}
+    }};
+
+    function updateHideAppliedUI() {{
+      const appliedCount = Object.keys(appliedJobs).length;
+      if (appliedCountLabel) appliedCountLabel.textContent = appliedCount;
+      if (hideAppliedToggle) hideAppliedToggle.checked = hideApplied;
+
+      if (toggleHideAppliedBtn && hideAppliedBadge && hideAppliedIcon) {{
+        if (hideApplied) {{
+          toggleHideAppliedBtn.className = 'flex items-center gap-1.5 px-3 py-1 rounded-md font-semibold text-xs border transition shadow-sm bg-emerald-500/20 text-emerald-300 border-emerald-500/40 hover:bg-emerald-500/30 cursor-pointer ml-1 select-none';
+          hideAppliedIcon.textContent = '🙈';
+          hideAppliedBadge.textContent = `ON (${{appliedCount}})`;
+          hideAppliedBadge.className = 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/30 text-emerald-300';
+        }} else {{
+          toggleHideAppliedBtn.className = 'flex items-center gap-1.5 px-3 py-1 rounded-md font-medium text-xs border transition shadow-sm bg-slate-800/90 text-slate-300 border-slate-700 hover:border-slate-500 cursor-pointer ml-1 select-none';
+          hideAppliedIcon.textContent = '👁️';
+          hideAppliedBadge.textContent = 'OFF';
+          hideAppliedBadge.className = 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-slate-400';
+        }}
+      }}
+    }}
+
+    function toggleHideApplied() {{
+      hideApplied = !hideApplied;
+      localStorage.setItem('hide_applied_preference', hideApplied ? 'true' : 'false');
+      updateHideAppliedUI();
+      applyFilters(false);
+      const appliedCount = Object.keys(appliedJobs).length;
+      if (hideApplied) {{
+        showToast(`🙈 Hiding ${{appliedCount}} applied jobs from Explorer view`, 'info');
+      }} else {{
+        showToast(`👁️ Showing all jobs including applied roles`, 'info');
+      }}
+    }}
+
     // Load initial backend applied jobs data if available
     async function syncBackendApplications() {{
       try {{
@@ -784,6 +865,7 @@ def build_gui():
             // Merge with local
             appliedJobs = {{ ...data, ...appliedJobs }};
             saveAppliedJobs();
+            applyFilters(false);
           }}
         }}
       }} catch (err) {{
@@ -806,6 +888,7 @@ def build_gui():
     function saveAppliedJobs() {{
       localStorage.setItem('applied_jobs_data', JSON.stringify(appliedJobs));
       updateAppliedCounters();
+      updateHideAppliedUI();
       renderTrackerTable();
 
       // Background sync to backend server
@@ -842,27 +925,38 @@ def build_gui():
     }}
 
     function toggleJobApplied(job) {{
-      if (appliedJobs[job.id]) {{
-        delete appliedJobs[job.id];
+      if (!job || !job.id) return;
+      const jid = String(job.id);
+      const wasApplied = Boolean(appliedJobs[jid]);
+
+      if (wasApplied) {{
+        delete appliedJobs[jid];
+        showToast(`Unmarked <b>${{job.company || 'Job'}}</b> as applied`, 'info');
       }} else {{
-        appliedJobs[job.id] = {{
-          job_id: job.id,
-          company: job.company,
-          title: job.title,
+        appliedJobs[jid] = {{
+          job_id: jid,
+          company: job.company || '',
+          title: job.title || '',
           status: 'Applied',
           applied_date: new Date().toISOString().slice(0, 10),
-          workplace_type: job.workplace_type,
-          employment_type: job.employment_type,
-          location: job.location,
-          score: job.score,
-          apply_link: job.apply_link,
+          workplace_type: job.workplace_type || '',
+          employment_type: job.employment_type || '',
+          location: job.location || '',
+          score: job.score || 0,
+          apply_link: job.apply_link || '',
           description: job.description || '',
           notes: ''
         }};
+        showToast(`✓ Marked <b>${{job.company || 'Job'}}</b> as Applied!`, 'success');
       }}
+
       saveAppliedJobs();
-      if (selectedJob && selectedJob.id === job.id) updateAppliedBtnState();
-      applyFilters();
+
+      if (selectedJob && String(selectedJob.id) === jid) {{
+        updateAppliedBtnState();
+      }}
+
+      applyFilters(false);
     }}
 
     function getScoreBadge(score) {{
@@ -887,16 +981,16 @@ def build_gui():
       }}
     }}
 
-    function applyFilters() {{
+    function applyFilters(resetPage = true) {{
       const q = currentSearch.toLowerCase().trim();
 
       filteredJobs = allJobs.filter(j => {{
         // Hide applied filter
-        const isApplied = Boolean(appliedJobs[j.id]);
+        const isApplied = Boolean(appliedJobs[String(j.id)]);
         if (hideApplied && isApplied) return false;
 
         // Filter tabs
-        if (currentFilter === 'shortlist' && !shortlistedIds.has(j.id)) return false;
+        if (currentFilter === 'shortlist' && !shortlistedIds.has(String(j.id))) return false;
         if (currentFilter === 'profile' && !j.is_profile) return false;
         if (currentFilter === 'international' && !j.is_international) return false;
         if (currentFilter === 'remote' && j.workplace_type !== 'Remote') return false;
@@ -923,8 +1017,15 @@ def build_gui():
         filteredJobs.sort((a, b) => a.title.localeCompare(b.title));
       }}
 
-      currentPage = 1;
+      if (resetPage) {{
+        currentPage = 1;
+      }} else {{
+        const totalPages = Math.max(1, Math.ceil(filteredJobs.length / pageSize));
+        if (currentPage > totalPages) currentPage = totalPages;
+      }}
+
       renderTable();
+      updateHideAppliedUI();
     }}
 
     function renderTable() {{
@@ -962,22 +1063,26 @@ def build_gui():
       jobsTableBody.innerHTML = pageSlice.map(j => {{
         const isSelected = selectedJob && selectedJob.id === j.id;
         const isShortlisted = shortlistedIds.has(j.id);
-        const isApplied = Boolean(appliedJobs[j.id]);
+        const isApplied = Boolean(appliedJobs[String(j.id)]);
         const activeClass = isSelected ? 'bg-blue-900/20 border-l-2 border-blue-500' : 'hover:bg-slate-900/70';
 
         const appliedBtnHtml = isApplied ? `
           <button 
-            class="job-applied-btn px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/40 text-[11px] transition inline-flex items-center gap-1 shadow-sm shadow-emerald-500/10" 
+            type="button"
+            class="job-applied-btn px-2.5 py-1 rounded-full font-bold bg-emerald-500/25 hover:bg-emerald-500/35 text-emerald-300 border border-emerald-500/50 text-[11px] transition inline-flex items-center gap-1 shadow-sm shadow-emerald-500/20 cursor-pointer" 
             data-id="${{j.id}}" 
+            onclick="toggleJobAppliedById('${{j.id}}', event)"
             title="Marked as Applied! Click to unmark"
           >
             ✓ Applied
           </button>
         ` : `
           <button 
-            class="job-applied-btn px-2 py-0.5 rounded-full font-medium bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-700/80 text-[11px] transition inline-flex items-center gap-1" 
+            type="button"
+            class="job-applied-btn px-2.5 py-1 rounded-full font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-600 text-[11px] transition inline-flex items-center gap-1 cursor-pointer" 
             data-id="${{j.id}}" 
-            title="Mark as Applied"
+            onclick="toggleJobAppliedById('${{j.id}}', event)"
+            title="Click to mark as Applied"
           >
             + Mark Applied
           </button>
@@ -1012,7 +1117,7 @@ def build_gui():
             <td class="py-2.5 px-3 text-center text-slate-400 text-[11px]">
               ${{j.date_posted || 'Recent'}}
             </td>
-            <td class="py-2.5 px-3 text-center" onclick="event.stopPropagation()">
+            <td class="py-2.5 px-3 text-center">
               ${{appliedBtnHtml}}
             </td>
             <td class="py-2.5 px-3 text-center" onclick="event.stopPropagation()">
@@ -1297,18 +1402,28 @@ def build_gui():
       searchBanner.classList.add('hidden');
     }});
 
-    // Hide Applied Toggle
-    hideAppliedToggle.addEventListener('change', () => {{
-      hideApplied = hideAppliedToggle.checked;
-      applyFilters();
-    }});
+    // Hide Applied Toggles (Synced)
+    if (hideAppliedToggle) {{
+      hideAppliedToggle.addEventListener('change', () => {{
+        toggleHideApplied();
+      }});
+    }}
+
+    if (toggleHideAppliedBtn) {{
+      toggleHideAppliedBtn.addEventListener('click', (e) => {{
+        e.preventDefault();
+        toggleHideApplied();
+      }});
+    }}
 
     // Table Row Click
     jobsTableBody.addEventListener('click', (e) => {{
       const appliedBtn = e.target.closest('.job-applied-btn');
       if (appliedBtn) {{
+        e.preventDefault();
+        e.stopPropagation();
         const jid = appliedBtn.getAttribute('data-id');
-        const job = allJobs.find(x => x.id === jid);
+        const job = allJobs.find(x => String(x.id) === String(jid));
         if (job) toggleJobApplied(job);
         return;
       }}
@@ -1316,7 +1431,7 @@ def build_gui():
       const row = e.target.closest('.job-row');
       if (row) {{
         const jid = row.getAttribute('data-id');
-        const job = allJobs.find(x => x.id === jid);
+        const job = allJobs.find(x => String(x.id) === String(jid));
         if (job) selectJob(job);
       }}
     }});
@@ -1366,7 +1481,9 @@ def build_gui():
       renderTable();
     }});
 
-    detailToggleAppliedBtn.addEventListener('click', () => {{
+    detailToggleAppliedBtn.addEventListener('click', (e) => {{
+      e.preventDefault();
+      e.stopPropagation();
       if (!selectedJob) return;
       toggleJobApplied(selectedJob);
     }});
@@ -1606,6 +1723,7 @@ def build_gui():
     // Initial render
     updateShortlistCounters();
     updateAppliedCounters();
+    updateHideAppliedUI();
     applyFilters();
     renderTrackerTable();
   </script>
