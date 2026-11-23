@@ -236,25 +236,14 @@ def build_gui():
         </button>
 
         <button 
-          id="exportFilteredBtn" 
-          class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-medium transition"
-          title="Export All Filtered Roles to CSV (Includes Full Job Descriptions)"
-        >
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-          </svg>
-          <span>Export All (<span id="exportFilteredCount">0</span>)</span>
-        </button>
-
-        <button 
           id="exportShortlistBtn" 
-          class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-medium transition"
-          title="Export Shortlisted Roles to CSV (Includes Full Job Descriptions)"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-semibold transition"
+          title="Export Selected Jobs to CSV (Includes Full Job Descriptions)"
         >
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
           </svg>
-          <span>Shortlist (<span id="shortlistCountHeader">0</span>)</span>
+          <span>Export Selected (<span id="shortlistCountHeader">0</span>)</span>
         </button>
       </div>
 
@@ -733,8 +722,6 @@ def build_gui():
     const shortlistCountHeader = document.getElementById('shortlistCountHeader');
     const shortlistTabCount = document.getElementById('shortlistTabCount');
     const exportShortlistBtn = document.getElementById('exportShortlistBtn');
-    const exportFilteredBtn = document.getElementById('exportFilteredBtn');
-    const exportFilteredCount = document.getElementById('exportFilteredCount');
 
     // Detail Panel Elements
     const emptyDetailPlaceholder = document.getElementById('emptyDetailPlaceholder');
@@ -943,7 +930,6 @@ def build_gui():
     function renderTable() {{
       const total = filteredJobs.length;
       totalMatches.textContent = total;
-      if (exportFilteredCount) exportFilteredCount.textContent = total;
 
       const totalPages = Math.max(1, Math.ceil(total / pageSize));
       if (currentPage > totalPages) currentPage = totalPages;
@@ -1437,48 +1423,13 @@ def build_gui():
       }}
     }});
 
-    // Export All Filtered Jobs to CSV (with Full Descriptions)
-    if (exportFilteredBtn) {{
-      exportFilteredBtn.addEventListener('click', () => {{
-        if (filteredJobs.length === 0) {{
-          alert('No jobs match the current filters.');
-          return;
-        }}
-        const headers = ['Company Name', 'Job Profile', 'Workplace Type', 'Employment Type', 'Location', 'Date Posted', 'Apply Link', 'Match Score', 'Job Description'];
-        const rows = filteredJobs.map(j => [
-          `"${{(j.company || '').replace(/"/g, '""')}}"`,
-          `"${{(j.title || '').replace(/"/g, '""')}}"`,
-          `"${{j.workplace_type || ''}}"`,
-          `"${{j.employment_type || ''}}"`,
-          `"${{(j.location || '').replace(/"/g, '""')}}"`,
-          `"${{j.date_posted || ''}}"`,
-          `"${{j.apply_link || ''}}"`,
-          `"${{j.score || 0}}%"`,
-          `"${{(j.description || '').replace(/"/g, '""')}}"`
-        ]);
-        const csvContent = '\\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\\r\\n');
-        const blob = new Blob([csvContent], {{ type: 'text/csv;charset=utf-8;' }});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Filtered_LinkedIn_Jobs_${{new Date().toISOString().slice(0, 10)}}.csv`;
-        a.click();
-        URL.revokeObjectURL(url);
-      }});
-    }}
-
-    // Export Shortlist
+    // Export Selected Jobs Only
     exportShortlistBtn.addEventListener('click', () => {{
-      let selectedList = [];
-      if (shortlistedIds.size > 0) {{
-        selectedList = allJobs.filter(j => shortlistedIds.has(j.id));
-      }} else {{
-        if (confirm(`You have not checked individual boxes. Would you like to export all ${{filteredJobs.length}} filtered jobs currently shown (including full Job Descriptions)?`)) {{
-          selectedList = filteredJobs;
-        }} else {{
-          return;
-        }}
+      if (shortlistedIds.size === 0) {{
+        alert('No jobs selected! Please check the boxes next to the jobs you wish to export.');
+        return;
       }}
+      const selectedList = allJobs.filter(j => shortlistedIds.has(j.id));
       const headers = ['Company Name', 'Job Profile', 'Workplace Type', 'Employment Type', 'Location', 'Date Posted', 'Apply Link', 'Match Score', 'Job Description'];
       const rows = selectedList.map(j => [
         `"${{(j.company || '').replace(/"/g, '""')}}"`,
